@@ -1,8 +1,12 @@
 // const fs = require("fs");
 
-// const { Console } = require("console");
+const { Console } = require("console");
 // get fs module for creating write streams
-const fs = require("fs");
+const { promises: fs } = require("fs");
+
+const write = async (text) => {
+	await fs.appendFile("file.txt", text);
+};
 
 // make a new logger
 // const myLogger = new Console({
@@ -57,17 +61,17 @@ var possibilities = [];
 const runPossibilities = (row) => {
 	possibilities = [];
 	for (let l = 0; l < N; l++) {
-		possibilities.push([]);
+		// possibilities.push([]);
 		const possible = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 		for (let row = 0; row < grid.length - 1; row++) {
-			if (grid[row][l] === newNumber) {
-				const index = possible.indexOf(newNumber);
+			if (possible.includes(grid[row][l])) {
+				const index = possible.indexOf(grid[row][l]);
 				possible.splice(index, 1);
 			}
 		}
 
-		console.log("🚀 ~ runPossibilities ~ possibilities:", possibilities);
-		console.log("🚀 ~ runPossibilities ~ possible:", possible);
+		// console.log("🚀 ~ runPossibilities ~ possibilities:", possibilities);
+		// console.log("🚀 ~ runPossibilities ~ possible:", possible);
 		possibilities.push(possible);
 	}
 };
@@ -102,8 +106,34 @@ const checkIfNeeded = (currentColumn, newNumber) => {
 
 const removeFromPossibilities = (currentColumn, newNumber) => {
 	for (let i = currentColumn; i < N; i++) {
-		const index = possibilities[i].indexOf(newNumber);
-		possibilities[i].splice(index, 1);
+		if (possibilities[i].includes(newNumber)) {
+			const index = possibilities[i].indexOf(newNumber);
+			possibilities[i].splice(index, 1);
+		}
+	}
+};
+
+var correctRow = true;
+var j = 0;
+
+const checkIfNotUsable = (i) => {
+	// console.log("🚀 ~ checkIfNotUsable ~ possibilities:", possibilities);
+	for (let l = 0; l < N; l++) {
+		// console.log(
+		// 	"🚀 ~ checkIfNotUsable ~ possibilities[l].length:",
+		// 	possibilities[l].length
+		// );
+		if (possibilities.length > 0) {
+			if (possibilities[l].length == 0) {
+				// grid.splice(i, 1);
+				grid[i] = [];
+				j = 0;
+				// console.log(possibilities);
+				runPossibilities(i);
+				// console.log(`not usable`);
+				// console.log(grid);
+			}
+		}
 	}
 };
 
@@ -112,7 +142,10 @@ for (let i = 0; i < N; i++) {
 
 	if (i > 0) runPossibilities(i);
 
-	for (let j = 0; j < N; j++) {
+	// correctRow = true;
+	j = 0;
+
+	while (j < N) {
 		do {
 			newNumber = getRandomIntInclusive(1, 9);
 			// console.log(`running ${newNumber} at i=${i} and j=${j}`);
@@ -128,32 +161,55 @@ for (let i = 0; i < N; i++) {
 			// 		console.log(`${grid[k][j]} === ${newNumber} false`);
 			// 	}
 			// }
+			if (i > 0) checkIfNotUsable(i);
+
+			// console.log(possibilities);
+			// console.log(j);
+			if (
+				grid[i].includes(newNumber) &&
+				(i === 0 ? false : checkVertical(j, newNumber))
+			) {
+				grid[i] = [];
+				j = 0;
+				runPossibilities(i);
+			}
 		} while (
 			grid[i].includes(newNumber) ||
-			(i === 0
-				? false
-				: checkVertical(j, newNumber) || checkIfNeeded(j, newNumber))
+			(i === 0 ? false : checkVertical(j, newNumber))
 		);
 
-		console.log(`inserting ${newNumber} at i=${i} and j=${j}`);
-		console.log(`orizzontal ${grid[i].includes(newNumber)}`);
-		console.log(
-			`vertical ${i === 0 ? false : checkVertical(j, newNumber)}`
-		);
+		// console.log(`inserting ${newNumber} at i=${i} and j=${j}`);
+		// console.log(`orizzontal ${grid[i].includes(newNumber)}`);
+		// console.log(
+		// 	`vertical ${i === 0 ? false : checkVertical(j, newNumber)}`
+		// );
 
-		for (let k = 0; k < grid.length - 1; k++) {
-			if (grid[k][j] === newNumber) {
-				console.log(`${grid[k][j]} true`);
-			} else {
-				console.log(`${grid[k][j]} false`);
-			}
-		}
+		// for (let k = 0; k < grid.length - 1; k++) {
+		// 	if (grid[k][j] === newNumber) {
+		// 		console.log(`${grid[k][j]} true`);
+		// 	} else {
+		// 		console.log(`${grid[k][j]} false`);
+		// 	}
+		// }
 		grid[i].push(newNumber);
-		console.log(grid);
+		// console.log(grid);
 		// console.log(`finito ${j}`);
 
 		if (i > 0) removeFromPossibilities(j, newNumber);
+		j++;
 	}
+
+	console.log(`\n-------------------`);
+	console.log(grid);
+	fs.appendFile(
+		"grid.json",
+		JSON.stringify(grid, null, "\t"),
+		function (err) {
+			if (err) throw err;
+			console.log("IS WRITTEN");
+		}
+	);
+	write(JSON.stringify(grid, null, "\t"));
 }
 
 fs.writeFile("test.json", JSON.stringify(grid, null, "\t"), (err) => {

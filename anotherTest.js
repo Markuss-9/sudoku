@@ -24,11 +24,23 @@
 
 // console.log(provaArray);
 
-const testArray = [
-	[1, 2, 3],
-	[4, 5, 6],
-];
+// const testArray = [
+// 	[1, 2, 3],
+// 	[4, 5, 6],
+// ];
 
-for (let i = 0; i < testArray.length; i++) {
-	if (testArray[i][0] === 5) console.log(`uguale`);
-}
+// for (let i = 0; i < testArray.length; i++) {
+// 	if (testArray[i][0] === 5) console.log(`uguale`);
+// }
+
+// const arrVuoto = [];
+
+// console.log(arrVuoto.length);
+
+const arry = [1, 2, 3, 4, 5];
+
+const toFindDuplicates = (arry) => {
+	return arry.filter((item, index) => arry.indexOf(item) !== index);
+};
+const duplicateElements = toFindDuplicates(arry);
+console.log(duplicateElements);
