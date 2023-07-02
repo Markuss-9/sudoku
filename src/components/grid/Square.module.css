@@ -20,3 +20,12 @@
 	width: 300px;
 	display: table-cell;
 }
+
+.blocchetto {
+	display: table-row;
+}
+
+.tabellona {
+	display: table;
+	width: 500px;
+}
