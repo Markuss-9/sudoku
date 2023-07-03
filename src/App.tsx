@@ -58,6 +58,7 @@ function App() {
 	// 	);
 	// });
 
+	//! can't use this structure anymore, it doesn't contain indexes of the block we want to update
 	const updateNumber = (num: number) => {
 		let newGrid = [...gridWithIndexesState];
 		newGrid[squareFocus.y][squareFocus.x].value = num;
