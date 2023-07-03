@@ -107,22 +107,42 @@ function App() {
 	// });
 	// console.log(bl);
 
+	const getCurrentTheme = () =>
+		window.matchMedia("(prefers-color-scheme: dark)").matches;
+	console.log("pppppppppppppppppppppppp", getCurrentTheme());
+	const [isDarkTheme, setIsDarkTheme] = useState(getCurrentTheme());
+	const mqListenerTheme = (e: any) => {
+		setIsDarkTheme(e.matches);
+	};
+
+	useEffect(() => {
+		const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+		darkThemeMq.addEventListener("change", (e) => mqListenerTheme(e));
+		return () => darkThemeMq.removeEventListener("change", mqListenerTheme);
+	}, []);
+
 	return (
 		<div className="App">
-			{/* {row} */}
-			{/* {grid.map((element: Array<Number>) => {
+			<div
+				style={{
+					background: isDarkTheme ? "#313131" : "#fff",
+				}}
+			>
+				{/* {row} */}
+				{/* {grid.map((element: Array<Number>) => {
 				return <RowSquares row={element} click={setSquareFocus} />;
 			})} */}
-			{/* <RowSquares /> */}
-			{/* {bl} */}
-			<AllGrid
-				blocks={blocks}
-				click={setSquareFocus}
-				focusObj={squareFocus}
-			/>
-			<br />
-			<br />
-			<ButtonsActions update={updateNumber} />
+				{/* <RowSquares /> */}
+				{/* {bl} */}
+				<AllGrid
+					blocks={blocks}
+					click={setSquareFocus}
+					focusObj={squareFocus}
+				/>
+				<br />
+				<br />
+				<ButtonsActions update={updateNumber} />
+			</div>
 		</div>
 	);
 }
