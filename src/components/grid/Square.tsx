@@ -17,7 +17,7 @@ export const Square = ({ value, click, x, y, focus }: oggetto) => {
 			<div
 				className={`${styles.square} ${focus ? styles.test1000 : ""}`}
 				onClick={(e) => {
-					console.log(`yoo`);
+					// console.log(`yoo`);
 					// isFocus ? setFocus(false) : setFocus(true);
 					click({ x: x, y: y });
 					// e.target.classList.add('bg-yellow');

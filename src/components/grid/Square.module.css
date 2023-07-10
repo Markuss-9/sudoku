@@ -19,6 +19,7 @@
 .block {
 	width: 300px;
 	display: table-cell;
+	border: solid #0058aa 1px;
 }
 
 .blocchetto {
@@ -26,6 +27,7 @@
 }
 
 .tabellona {
-	display: table;
-	width: 500px;
+	display: inline-block;
+	width: 492px; /*	see if i can do it dynamic */
+	border: solid #0058aa 1px;
 }

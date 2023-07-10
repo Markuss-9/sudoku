@@ -14,7 +14,7 @@ interface oggetto2 {
 }
 
 export const Block = ({ block, click, focusObj }: any) => {
-	console.log(block);
+	// console.log(block);
 
 	const cells: any = block.map((row: any) => {
 		return row.map((element: any) => {

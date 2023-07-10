@@ -28,15 +28,65 @@ function App() {
 
 	const [blocks, setBlocks] = useState(gridBlocks);
 
+	const updateNumber = (num: number) => {
+		let newGrid = [...blocks];
+		let fictionalX = Math.floor(squareFocus.x / 3);
+		let fictionalY = Math.floor(squareFocus.y / 3);
+
+		// let block = newGrid[fictionalY][fictionalX];
+		newGrid[fictionalY][fictionalX][squareFocus.y - fictionalY * 3][
+			squareFocus.x - fictionalX * 3
+		].value = num;
+
+		setBlocks(newGrid);
+
+		let newGridIndexes = gridWithIndexesState;
+		newGridIndexes[squareFocus.y][squareFocus.x] = num;
+		setGridWithIndexesState(newGridIndexes);
+		// createBlocks(gridWithIndexes);
+		// console.log(blocksState);
+	};
+
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
-			if (event.key === "1" && squareFocus.x !== null) {
-				console.log("1");
-				console.log(squareFocus);
-				let newGrid = [...gridWithIndexesState];
-				newGrid[squareFocus.y][squareFocus.x].value = 1;
-				setGridWithIndexesState(gridWithIndexesState);
-			}
+			//if I insert isFinite(Number(event.key)) it does consider the 0, but in sudoku I don't want it
+
+			if (Number(event.key) && squareFocus.x !== null)
+				updateNumber(Number(event.key));
+			else if (
+				(event.key === "ArrowUp" || event.key === "w") &&
+				squareFocus.y > 0
+			)
+				setSquareFocus({
+					x: squareFocus.x,
+					y: squareFocus.y - 1,
+				});
+			else if (
+				(event.key === "ArrowDown" || event.key === "s") &&
+				squareFocus.y < 8
+			)
+				setSquareFocus({
+					x: squareFocus.x,
+					y: squareFocus.y + 1,
+				});
+			else if (
+				(event.key === "ArrowLeft" || event.key === "a") &&
+				squareFocus.x > 0
+			)
+				setSquareFocus({
+					x: squareFocus.x - 1,
+					y: squareFocus.y,
+				});
+			else if (
+				(event.key === "ArrowRight" || event.key === "d") &&
+				squareFocus.x < 8
+			)
+				setSquareFocus({
+					x: squareFocus.x + 1,
+					y: squareFocus.y,
+				});
+
+			console.log(event);
 		};
 
 		window.addEventListener("keyup", handleKeyPress);
@@ -44,7 +94,7 @@ function App() {
 		return () => {
 			window.removeEventListener("keyup", handleKeyPress); //unmonunt, instead it updates all the past focused items
 		};
-	}, [squareFocus]);
+	}, [squareFocus, updateNumber]);
 
 	// const row: any = [];
 	// gridTest.forEach((element: Array<number>, index: number) => {
@@ -59,13 +109,6 @@ function App() {
 	// });
 
 	//! can't use this structure anymore, it doesn't contain indexes of the block we want to update
-	const updateNumber = (num: number) => {
-		let newGrid = [...gridWithIndexesState];
-		newGrid[squareFocus.y][squareFocus.x].value = num;
-		setBlocks(blocks);
-		// createBlocks(gridWithIndexes);
-		// console.log(blocksState);
-	};
 
 	// const blocks: Array<Array<Array<Array<object>>>> = []; //TODO: che schifo, sistemare
 	// const createBlocks = (gridWithIndexesState: Array<Array<object>>) => {
