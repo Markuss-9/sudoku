@@ -1,19 +1,21 @@
 import { Square } from "./Square";
 import styles from "./Square.module.css";
 
-interface singleCellProps {
+interface cellStruct {
 	value: number;
 	x: number;
 	y: number;
 }
 
+type matrix = cellStruct[][];
+
 interface oggetto2 {
-	block: Array<Array<any>>;
+	block: matrix;
 	click: Function;
 	focusObj: any;
 }
 
-export const Block = ({ block, click, focusObj }: any) => {
+export const Block = ({ block, click, focusObj }: oggetto2) => {
 	// console.log(block);
 
 	const cells: any = block.map((row: any) => {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { createBlocks } from "./utils/createBlocks";
 
 // import { RowSquares } from "./components/grid/RowSquares";
 import { AllGrid } from "./components/grid/AllGrid";
@@ -26,10 +27,18 @@ function App() {
 	const [gridWithIndexesState, setGridWithIndexesState] =
 		useState(gridWithIndexes);
 
-	const [blocks, setBlocks] = useState(gridBlocks);
+	interface cellStruct {
+		value: number;
+		x: number;
+		y: number;
+	}
+
+	type matrix4dim = cellStruct[][][][];
+
+	const [blocks, setBlocks] = useState<matrix4dim>(createBlocks());
 
 	const updateNumber = (num: number) => {
-		let newGrid = [...blocks];
+		let newGrid: matrix4dim = [...blocks];
 		let fictionalX = Math.floor(squareFocus.x / 3);
 		let fictionalY = Math.floor(squareFocus.y / 3);
 
@@ -37,9 +46,7 @@ function App() {
 		newGrid[fictionalY][fictionalX][squareFocus.y - fictionalY * 3][
 			squareFocus.x - fictionalX * 3
 		].value = num;
-
 		setBlocks(newGrid);
-
 		let newGridIndexes = gridWithIndexesState;
 		newGridIndexes[squareFocus.y][squareFocus.x] = num;
 		setGridWithIndexesState(newGridIndexes);
