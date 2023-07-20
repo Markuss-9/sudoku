@@ -5,27 +5,16 @@ import { createBlocks } from "./utils/createBlocks";
 // import { RowSquares } from "./components/grid/RowSquares";
 import { AllGrid } from "./components/grid/AllGrid";
 import { ButtonsActions } from "./components/ButtonsActions/ButtonsActions";
-import { Block } from "./components/grid/Block";
-
-// import { grid } from "./generateGrid";
 
 const grid: any = require("./test.json");
 
 const gridBlocks: any = require("./test-blocks.json");
 
-const gridWithIndexes = grid;
-
-grid.forEach((row: Array<number>, y: number) => {
-	row.forEach((cell: number, x: number) => {
-		gridWithIndexes[y][x] = { value: cell, x: x, y: y };
-	});
-});
-
 function App() {
 	const [squareFocus, setSquareFocus] = useState({ x: 0, y: 0 });
-	// const [gridTest, setGridTest] = useState(grid);
-	const [gridWithIndexesState, setGridWithIndexesState] =
-		useState(gridWithIndexes);
+	const [gridTest, setGridTest] = useState(grid);
+	// const [gridWithIndexesState, setGridWithIndexesState] =
+	// 	useState(gridWithIndexes);
 
 	interface cellStruct {
 		value: number;
@@ -35,7 +24,7 @@ function App() {
 
 	type matrix4dim = cellStruct[][][][];
 
-	const [blocks, setBlocks] = useState<matrix4dim>(createBlocks());
+	const [blocks, setBlocks] = useState<matrix4dim>(createBlocks(gridTest));
 
 	const updateNumber = (num: number) => {
 		let newGrid: matrix4dim = [...blocks];
@@ -47,9 +36,13 @@ function App() {
 			squareFocus.x - fictionalX * 3
 		].value = num;
 		setBlocks(newGrid);
-		let newGridIndexes = gridWithIndexesState;
+		// let newGridIndexes = gridWithIndexesState;
+		// newGridIndexes[squareFocus.y][squareFocus.x] = num;
+		// setGridWithIndexesState(newGridIndexes);
+
+		let newGridIndexes = gridTest;
 		newGridIndexes[squareFocus.y][squareFocus.x] = num;
-		setGridWithIndexesState(newGridIndexes);
+		setGridTest(newGridIndexes);
 		// createBlocks(gridWithIndexes);
 		// console.log(blocksState);
 	};
@@ -103,61 +96,6 @@ function App() {
 		};
 	}, [squareFocus, updateNumber]);
 
-	// const row: any = [];
-	// gridTest.forEach((element: Array<number>, index: number) => {
-	// 	row.push(
-	// 		<RowSquares
-	// 			row={element}
-	// 			click={setSquareFocus}
-	// 			y={index}
-	// 			focusObj={squareFocus}
-	// 		/>
-	// 	);
-	// });
-
-	//! can't use this structure anymore, it doesn't contain indexes of the block we want to update
-
-	// const blocks: Array<Array<Array<Array<object>>>> = []; //TODO: che schifo, sistemare
-	// const createBlocks = (gridWithIndexesState: Array<Array<object>>) => {
-	// 	console.log(`da`);
-	// 	for (let row = 0; row < grid.length / 3; row++) {
-	// 		blocks.push([]);
-	// 		for (let column = 0; column < grid.length / 3; column++) {
-	// 			let startRow = row * 3;
-	// 			let startColumn = column * 3;
-	// 			blocks[row].push(
-	// 				gridWithIndexesState
-	// 					.slice(startRow, startRow + 3)
-	// 					.map((r: Array<object>) =>
-	// 						r.slice(startColumn, startColumn + 3)
-	// 					)
-	// 			);
-	// 			// console.log(blocks);
-	// 		}
-	// 	}
-
-	// 	return blocks;
-	// };
-	// const [blocksState, setBlocksState] = useState(
-	// 	createBlocks(gridWithIndexes)
-	// );
-	// setBlocksState(createBlocks(gridWithIndexes));
-
-	// const bl: any = [];
-	// blocksState.forEach((element: Array<Array<Array<object>>>) => {
-	// 	element.forEach((element2: Array<Array<object>>) => {
-	// 		bl.push(
-	// 			<Block
-	// 				block={element2}
-	// 				click={setSquareFocus}
-	// 				focusObj={squareFocus}
-	// 			/>
-	// 		);
-	// 		// console.log(element2);
-	// 	});
-	// });
-	// console.log(bl);
-
 	const getCurrentTheme = () =>
 		window.matchMedia("(prefers-color-scheme: dark)").matches;
 	console.log("pppppppppppppppppppppppp", getCurrentTheme());
@@ -179,13 +117,9 @@ function App() {
 					background: isDarkTheme ? "#313131" : "#fff",
 				}}
 			>
-				{/* {row} */}
-				{/* {grid.map((element: Array<Number>) => {
-				return <RowSquares row={element} click={setSquareFocus} />;
-			})} */}
-				{/* <RowSquares /> */}
-				{/* {bl} */}
+				<h1>Sudoku</h1>
 				<AllGrid
+					grid={gridTest}
 					blocks={blocks}
 					click={setSquareFocus}
 					focusObj={squareFocus}

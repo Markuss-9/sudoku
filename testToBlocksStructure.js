@@ -1,17 +1,18 @@
 const grid = require("./test.json");
 
 const fs = require("fs");
-const gridWithIndexes = grid;
 
-grid.forEach((row, y) => {
-	row.forEach((cell, x) => {
-		gridWithIndexes[y][x] = { value: cell, x: x, y: y };
+const createBlocks = () => {
+	let gridWithIndexes = [];
+	grid.forEach((row, y) => {
+		gridWithIndexes.push([]);
+		row.forEach((cell, x) => {
+			gridWithIndexes[y].push({ value: cell, x: x, y: y });
+		});
 	});
-});
 
-const blocks = []; //TODO: che schifo, sistemare
-const createBlocks = (gridWithIndexes) => {
-	console.log(`da`);
+	const blocks = [];
+
 	for (let row = 0; row < grid.length / 3; row++) {
 		blocks.push([]);
 		for (let column = 0; column < grid.length / 3; column++) {
@@ -27,7 +28,7 @@ const createBlocks = (gridWithIndexes) => {
 	}
 
 	fs.writeFile(
-		"test-blocks.json",
+		"test-blocks222222.json",
 		JSON.stringify(blocks, null, "\t"),
 		(err) => {
 			if (err) {
@@ -35,7 +36,14 @@ const createBlocks = (gridWithIndexes) => {
 			}
 		}
 	);
+
 	return blocks;
 };
 
-createBlocks(gridWithIndexes);
+createBlocks();
+createBlocks();
+createBlocks();
+createBlocks();
+createBlocks();
+createBlocks();
+createBlocks();

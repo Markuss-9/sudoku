@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Block } from "./Block";
 import styles from "./Square.module.css";
 
-export const AllGrid = ({ blocks, click, focusObj }: any) => {
-	const blocksMapped = blocks.map((row: any) => {
+import { createBlocks } from "../../utils/createBlocks";
+
+export const AllGrid = ({ grid, blocks, click, focusObj }: any) => {
+	const blocksMapped = createBlocks(grid).map((row: any) => {
 		return (
 			<div className={styles.blocchetto}>
 				{row.map((item: any) => {

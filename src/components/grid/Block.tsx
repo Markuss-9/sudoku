@@ -16,11 +16,8 @@ interface oggetto2 {
 }
 
 export const Block = ({ block, click, focusObj }: oggetto2) => {
-	// console.log(block);
-
 	const cells: any = block.map((row: any) => {
 		return row.map((element: any) => {
-			// console.log(element.value);
 			return (
 				<Square
 					value={element.value}
@@ -38,15 +35,9 @@ export const Block = ({ block, click, focusObj }: oggetto2) => {
 	});
 	return (
 		<>
-			{/* <Square value={"5"} />
-			<Square value={"5"} />
-			<Square /> */}
 			<div className={styles.block}>
 				{/* <div>shit</div> */}
 				{cells}
-				{/* {row.map((element: number) => {
-					return <Square value={element} click={click} />;
-				})} */}
 			</div>
 		</>
 	);
