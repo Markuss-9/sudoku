@@ -1,5 +1,3 @@
-const fs = require("fs");
-
 //! sia con require che con fs.readFileSync non funziona. integrare la generazione cosi' da evitare json
 // const grid = require("../test.json");
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import { createBlocks } from "./utils/createBlocks";
 
@@ -10,7 +10,7 @@ import { handleKeyPress } from "./utils/handleKeyPress";
 
 const grid: any = require("./test.json");
 
-const gridBlocks: any = require("./test-blocks.json");
+// const gridBlocks: any = require("./test-blocks.json");
 
 function App() {
 	const [squareFocus, setSquareFocus] = useState({ x: 0, y: 0 });
@@ -28,26 +28,29 @@ function App() {
 
 	const [blocks, setBlocks] = useState<matrix4dim>(createBlocks(gridTest));
 
-	const updateNumber = (num: number) => {
-		let newGrid: matrix4dim = [...blocks];
-		let fictionalX = Math.floor(squareFocus.x / 3);
-		let fictionalY = Math.floor(squareFocus.y / 3);
+	const updateNumber = useCallback(
+		(num: number) => {
+			let newGrid: matrix4dim = [...blocks];
+			let fictionalX = Math.floor(squareFocus.x / 3);
+			let fictionalY = Math.floor(squareFocus.y / 3);
 
-		// let block = newGrid[fictionalY][fictionalX];
-		newGrid[fictionalY][fictionalX][squareFocus.y - fictionalY * 3][
-			squareFocus.x - fictionalX * 3
-		].value = num;
-		setBlocks(newGrid);
-		// let newGridIndexes = gridWithIndexesState;
-		// newGridIndexes[squareFocus.y][squareFocus.x] = num;
-		// setGridWithIndexesState(newGridIndexes);
+			// let block = newGrid[fictionalY][fictionalX];
+			newGrid[fictionalY][fictionalX][squareFocus.y - fictionalY * 3][
+				squareFocus.x - fictionalX * 3
+			].value = num;
+			setBlocks(newGrid);
+			// let newGridIndexes = gridWithIndexesState;
+			// newGridIndexes[squareFocus.y][squareFocus.x] = num;
+			// setGridWithIndexesState(newGridIndexes);
 
-		let newGridIndexes = gridTest;
-		newGridIndexes[squareFocus.y][squareFocus.x] = num;
-		setGridTest(newGridIndexes);
-		// createBlocks(gridWithIndexes);
-		// console.log(blocksState);
-	};
+			let newGridIndexes = gridTest;
+			newGridIndexes[squareFocus.y][squareFocus.x] = num;
+			setGridTest(newGridIndexes);
+			// createBlocks(gridWithIndexes);
+			// console.log(blocksState);
+		},
+		[blocks, gridTest, squareFocus]
+	);
 
 	useEffect(() => {
 		const handleEvent = (event: KeyboardEvent) => {

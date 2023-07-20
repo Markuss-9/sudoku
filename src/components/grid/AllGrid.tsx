@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Block } from "./Block";
 import styles from "./Square.module.css";
 
