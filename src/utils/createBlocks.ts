@@ -3,8 +3,19 @@ const fs = require("fs");
 //! sia con require che con fs.readFileSync non funziona. integrare la generazione cosi' da evitare json
 // const grid = require("../test.json");
 
-export const createBlocks = (grid) => {
-	let gridWithIndexes = [];
+type matrixGrid = number[][];
+
+interface cellStruct {
+	value: number;
+	x: number;
+	y: number;
+}
+
+type matrixIndexes = cellStruct[][];
+type block4dim = matrixIndexes[][];
+
+export const createBlocks = (grid: matrixGrid) => {
+	let gridWithIndexes: matrixIndexes = [];
 	grid.forEach((row, y) => {
 		gridWithIndexes.push([]);
 		row.forEach((cell, x) => {
@@ -12,7 +23,7 @@ export const createBlocks = (grid) => {
 		});
 	});
 
-	const blocks = [];
+	const blocks: block4dim = [];
 	for (let row = 0; row < grid.length / 3; row++) {
 		blocks.push([]);
 		for (let column = 0; column < grid.length / 3; column++) {
