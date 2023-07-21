@@ -12,7 +12,7 @@ import { solvedGrid } from "./utils/generator-AI";
 
 import styled from "styled-components";
 
-const grid: any = require("./test.json");
+// const grid: any = require("./test.json");
 
 // const gridBlocks: any = require("./test-blocks.json");
 
