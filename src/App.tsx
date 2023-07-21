@@ -8,13 +8,17 @@ import { ButtonsActions } from "./components/ButtonsActions/ButtonsActions";
 
 import { handleKeyPress } from "./utils/handleKeyPress";
 
+import { solvedGrid } from "./utils/generator-AI";
+
+import styled from "styled-components";
+
 const grid: any = require("./test.json");
 
 // const gridBlocks: any = require("./test-blocks.json");
 
 function App() {
 	const [squareFocus, setSquareFocus] = useState({ x: 0, y: 0 });
-	const [gridTest, setGridTest] = useState(grid);
+	const [gridTest, setGridTest] = useState(solvedGrid);
 	// const [gridWithIndexesState, setGridWithIndexesState] =
 	// 	useState(gridWithIndexes);
 
@@ -78,13 +82,13 @@ function App() {
 		return () => darkThemeMq.removeEventListener("change", mqListenerTheme);
 	}, []);
 
+	const Theme = styled.div`
+		background: ${isDarkTheme ? "#313131" : "#fff"};
+	`;
+
 	return (
 		<div className="App">
-			<div
-				style={{
-					background: isDarkTheme ? "#313131" : "#fff",
-				}}
-			>
+			<Theme>
 				<h1>Sudoku</h1>
 				<AllGrid
 					grid={gridTest}
@@ -95,7 +99,7 @@ function App() {
 				<br />
 				<br />
 				<ButtonsActions update={updateNumber} />
-			</div>
+			</Theme>
 		</div>
 	);
 }

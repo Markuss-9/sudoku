@@ -1,4 +1,4 @@
-.square {
+.squareClass {
 	height: 30px;
 	width: 30px;
 	padding: 10px;
@@ -13,7 +13,7 @@
 }
 
 .test1000 {
-	background-color: #0058aa;
+	background-color: #0098ff;
 }
 
 .block {
