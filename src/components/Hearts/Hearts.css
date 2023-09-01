@@ -1,0 +1,18 @@
+/*? seems better without */
+
+.hearts {
+	display: flex;
+	align-items: center;
+}
+
+.hearts svg {
+	margin: 5px;
+	fill: none;
+	stroke: red;
+	stroke-width: 2;
+}
+
+.hearts svg[fill="red"] {
+	fill: red;
+	stroke: none;
+}

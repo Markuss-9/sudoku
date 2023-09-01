@@ -8,9 +8,10 @@ interface oggetto {
 	x: number;
 	y: number;
 	focus: boolean;
+	isError: boolean;
 }
 
-export const Square = ({ value, click, x, y, focus }: oggetto) => {
+export const Square = ({ value, click, x, y, focus, isError }: oggetto) => {
 	// const [isFocus, setFocus] = useState(false);
 	const colors: Array<string> = [
 		"#59000a",
@@ -25,14 +26,14 @@ export const Square = ({ value, click, x, y, focus }: oggetto) => {
 	];
 
 	const Cell = styled.div`
-		background: ${!focus ? colors[value - 1] : ""};
+		background: ${isError ? "#ff0000" : !focus ? colors[value - 1] : ""};
 	`;
 
 	return (
 		<>
 			<Cell
 				className={`${styles.squareClass} ${
-					focus ? styles.test1000 : ""
+					focus && !isError ? styles.test1000 : ""
 				}`}
 				onClick={(e) => {
 					// console.log(`yoo`);

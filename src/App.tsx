@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
-import { createBlocks } from "./utils/createBlocks";
 
-// import { RowSquares } from "./components/grid/RowSquares";
 import { AllGrid } from "./components/grid/AllGrid";
 import { ButtonsActions } from "./components/ButtonsActions/ButtonsActions";
 
@@ -12,73 +10,69 @@ import { generateSudoku } from "./utils/generator-AI";
 
 import styled from "styled-components";
 
-// const grid: any = require("./test.json");
-
-// const gridBlocks: any = require("./test-blocks.json");
+import Hearts from "./components/Hearts/Hearts";
 
 const maxToAdd = 5,
 	min = 5;
 const { solvedGrid, puzzleGrid, emptyCells } = generateSudoku(maxToAdd, min);
 
 function App() {
+	const mergeGrid = () => {
+		let merge = Array(9)
+			.fill(``)
+			.map(() => Array(9).fill(``));
+		for (let i = 0; i < merge.length; i++) {
+			for (let j = 0; j < merge[0].length; j++) {
+				merge[i][j] = {
+					solved: solvedGrid[i][j],
+					puzzle: puzzleGrid[i][j],
+				};
+			}
+		}
+		return merge;
+	};
+
 	const [squareFocus, setSquareFocus] = useState({ x: 0, y: 0 });
-	const [gridTest, setGridTest] = useState(solvedGrid);
-	// const [gridWithIndexesState, setGridWithIndexesState] =
-	// 	useState(gridWithIndexes);
+	const [grid, setGrid] = useState(mergeGrid());
+	const [movesToWin, setMovesToWin] = useState(emptyCells);
 
-	interface cellStruct {
-		value: number;
-		x: number;
-		y: number;
-	}
-
-	type matrix4dim = cellStruct[][][][];
-
-	const [blocks, setBlocks] = useState<matrix4dim>(createBlocks(gridTest));
+	const [hearts, setHearts] = useState<number>(3);
 
 	const updateNumber = useCallback(
 		(num: number) => {
-			let newGrid: matrix4dim = [...blocks];
-			let fictionalX = Math.floor(squareFocus.x / 3);
-			let fictionalY = Math.floor(squareFocus.y / 3);
+			let newGridIndexes = grid;
+			newGridIndexes[squareFocus.y][squareFocus.x].puzzle = num;
+			setGrid(newGridIndexes);
 
-			// let block = newGrid[fictionalY][fictionalX];
-			newGrid[fictionalY][fictionalX][squareFocus.y - fictionalY * 3][
-				squareFocus.x - fictionalX * 3
-			].value = num;
-			setBlocks(newGrid);
-			// let newGridIndexes = gridWithIndexesState;
-			// newGridIndexes[squareFocus.y][squareFocus.x] = num;
-			// setGridWithIndexesState(newGridIndexes);
-
-			let newGridIndexes = gridTest;
-			newGridIndexes[squareFocus.y][squareFocus.x] = num;
-			setGridTest(newGridIndexes);
-			// createBlocks(gridWithIndexes);
-			// console.log(blocksState);
+			grid[squareFocus.y][squareFocus.x].puzzle !==
+			grid[squareFocus.y][squareFocus.x].solved
+				? setHearts(hearts - 1)
+				: setMovesToWin(movesToWin - 1);
 		},
-		[blocks, gridTest, squareFocus]
+		[grid, squareFocus, hearts, movesToWin]
 	);
+
+	if (!hearts) window.alert(`Game Over`);
+	if (!movesToWin) window.alert(`Game Win`);
 
 	useEffect(() => {
 		const handleEvent = (event: KeyboardEvent) => {
 			handleKeyPress(event, setSquareFocus, updateNumber, squareFocus);
 		};
 
-		window.addEventListener("keyup", handleEvent);
+		movesToWin < 1 || hearts < 1
+			? window.removeEventListener("keyup", handleEvent)
+			: window.addEventListener("keyup", handleEvent);
 
 		return () => {
 			window.removeEventListener("keyup", handleEvent); //unmonunt, instead it updates all the past focused items
 		};
-	}, [squareFocus, updateNumber]);
+	}, [squareFocus, updateNumber, movesToWin]);
 
 	const getCurrentTheme = () =>
 		window.matchMedia("(prefers-color-scheme: dark)").matches;
-	console.log("pppppppppppppppppppppppp", getCurrentTheme());
 	const [isDarkTheme, setIsDarkTheme] = useState(getCurrentTheme());
-	const mqListenerTheme = (e: any) => {
-		setIsDarkTheme(e.matches);
-	};
+	const mqListenerTheme = (e: any) => setIsDarkTheme(e.matches);
 
 	useEffect(() => {
 		const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
@@ -94,10 +88,12 @@ function App() {
 		<div className="App">
 			<Theme>
 				<h1>Sudoku</h1>
+				<Hearts attempts={hearts} />
 				<AllGrid
-					grid={gridTest}
-					blocks={blocks}
-					click={setSquareFocus}
+					grid={grid}
+					click={
+						movesToWin < 1 || hearts < 1 ? () => {} : setSquareFocus
+					}
 					focusObj={squareFocus}
 				/>
 				<br />

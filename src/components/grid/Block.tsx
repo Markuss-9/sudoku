@@ -3,6 +3,7 @@ import styles from "./Square.module.css";
 
 interface cellStruct {
 	value: number;
+	solved: number;
 	x: number;
 	y: number;
 }
@@ -28,6 +29,9 @@ export const Block = ({ block, click, focusObj }: oggetto2) => {
 						focusObj.x === element.x && focusObj.y === element.y
 							? true
 							: false
+					}
+					isError={
+						element.value !== 0 && element.value !== element.solved
 					}
 				/>
 			);
