@@ -24,8 +24,6 @@ export const AllGrid = ({ grid, click, focusObj }: Grid) => {
 		return (
 			<div className={styles.blocchetto}>
 				{row.map((item: any) => {
-					// console.log(item);
-
 					return (
 						<Block block={item} click={click} focusObj={focusObj} />
 					);

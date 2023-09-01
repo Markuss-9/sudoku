@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import styles from "./Square.module.css";
 import styled from "styled-components";
 
@@ -12,7 +11,6 @@ interface oggetto {
 }
 
 export const Square = ({ value, click, x, y, focus, isError }: oggetto) => {
-	// const [isFocus, setFocus] = useState(false);
 	const colors: Array<string> = [
 		"#59000a",
 		"#520059",
@@ -26,7 +24,11 @@ export const Square = ({ value, click, x, y, focus, isError }: oggetto) => {
 	];
 
 	const Cell = styled.div`
-		background: ${isError ? "#ff0000" : !focus ? colors[value - 1] : ""};
+		background: ${isError
+			? "#ff0000"
+			: !focus && value !== 0
+			? "#474747"
+			: ""};
 	`;
 
 	return (
@@ -36,13 +38,9 @@ export const Square = ({ value, click, x, y, focus, isError }: oggetto) => {
 					focus && !isError ? styles.test1000 : ""
 				}`}
 				onClick={(e) => {
-					// console.log(`yoo`);
-					// isFocus ? setFocus(false) : setFocus(true);
 					click({ x: x, y: y });
-					// e.target.classList.add('bg-yellow');
 				}}
 			>
-				{/* {value || value !== 0 ? value : "\u00A0"} */}
 				{value !== 0 ? value : `\u00A0`}
 			</Cell>
 		</>

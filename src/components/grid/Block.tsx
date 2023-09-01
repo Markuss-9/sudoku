@@ -39,10 +39,7 @@ export const Block = ({ block, click, focusObj }: oggetto2) => {
 	});
 	return (
 		<>
-			<div className={styles.block}>
-				{/* <div>shit</div> */}
-				{cells}
-			</div>
+			<div className={styles.block}>{cells}</div>
 		</>
 	);
 };
