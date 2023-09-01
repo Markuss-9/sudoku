@@ -7,17 +7,21 @@
 	text-align: center;
 	justify-content: center;
 	align-items: center;
-
-	background-color: #666666;
 	border: 2px solid rgb(0, 0, 0);
 
-	/* -webkit-user-select: none;
-	-ms-user-select: none; 
-	user-select: none;  */
+	background: #666666;
 }
 
-.test1000 {
-	background-color: #0098ff;
+.error {
+	background: #ff0000;
+}
+
+.focus {
+	background: #0098ff;
+}
+
+.valueNotZero {
+	background: #474747;
 }
 
 .block {

@@ -1,6 +1,11 @@
 import { Square } from "./Square";
 import styles from "./Square.module.css";
 
+interface focus {
+	x: number;
+	y: number;
+}
+
 interface cellStruct {
 	value: number;
 	solved: number;
@@ -13,7 +18,7 @@ type matrix = cellStruct[][];
 interface oggetto2 {
 	block: matrix;
 	click: Function;
-	focusObj: any;
+	focusObj: focus;
 }
 
 export const Block = ({ block, click, focusObj }: oggetto2) => {

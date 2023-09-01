@@ -8,9 +8,11 @@ import { handleKeyPress } from "./utils/handleKeyPress";
 
 import { generateSudoku } from "./utils/generator-AI";
 
-import styled from "styled-components";
+// import styled from "styled-components";
 
 import Hearts from "./components/Hearts/Hearts";
+
+import { WinnerModal } from "./components/winner/WinnerModal";
 
 const maxToAdd = 5,
 	min = 5;
@@ -52,7 +54,10 @@ function App() {
 		[grid, squareFocus, hearts, movesToWin]
 	);
 
-	if (!hearts) window.alert(`Game Over`);
+	if (!hearts) {
+		// setSquareFocus({ x: -1, y: -1 });
+		// window.alert(`Game Over`);
+	}
 	if (!movesToWin) window.alert(`Game Win`);
 
 	useEffect(() => {
@@ -80,13 +85,13 @@ function App() {
 		return () => darkThemeMq.removeEventListener("change", mqListenerTheme);
 	}, []);
 
-	const Theme = styled.div`
-		background: ${isDarkTheme ? "#313131" : "#fff"};
-	`;
+	// const Theme = styled.div`
+	// 	background: ${isDarkTheme ? "#313131" : "#fff"};
+	// `;
 
 	return (
 		<div className="App">
-			<Theme>
+			<div className={isDarkTheme ? `darkTheme` : `lightTheme`}>
 				<h1>Sudoku</h1>
 				<Hearts attempts={hearts} />
 				<AllGrid
@@ -99,7 +104,8 @@ function App() {
 				<br />
 				<br />
 				<ButtonsActions update={updateNumber} />
-			</Theme>
+			</div>
+			<WinnerModal show={!hearts} title={`Game Over`} />
 		</div>
 	);
 }
