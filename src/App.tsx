@@ -8,13 +8,17 @@ import { ButtonsActions } from "./components/ButtonsActions/ButtonsActions";
 
 import { handleKeyPress } from "./utils/handleKeyPress";
 
-import { solvedGrid } from "./utils/generator-AI";
+import { generateSudoku } from "./utils/generator-AI";
 
 import styled from "styled-components";
 
 // const grid: any = require("./test.json");
 
 // const gridBlocks: any = require("./test-blocks.json");
+
+const maxToAdd = 5,
+	min = 5;
+const { solvedGrid, puzzleGrid, emptyCells } = generateSudoku(maxToAdd, min);
 
 function App() {
 	const [squareFocus, setSquareFocus] = useState({ x: 0, y: 0 });

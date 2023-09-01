@@ -54,7 +54,7 @@ function copyGrid(grid) {
 	return grid.map((row) => row.slice());
 }
 
-function generateSudoku() {
+export function generateSudoku(maxToAdd, min) {
 	// Create an empty 9x9 board
 	const board = Array.from({ length: 9 }, () => Array(9).fill(0));
 
@@ -73,7 +73,8 @@ function generateSudoku() {
 	const solvedGrid = copyGrid(board);
 
 	// Remove random numbers from the filled Sudoku board to create the puzzle
-	const emptyCells = Math.floor(Math.random() * 21) + 20; // Adjust the range as desired for difficulty
+	const emptyCells = Math.floor(Math.random() * maxToAdd + min); // Adjust the range as desired for difficulty
+	console.log("🚀 ~ generateSudoku ~ emptyCells:", emptyCells);
 	let cellsRemoved = 0;
 	while (cellsRemoved < emptyCells) {
 		const row = Math.floor(Math.random() * 9);
@@ -84,7 +85,7 @@ function generateSudoku() {
 		}
 	}
 
-	return { solvedGrid, puzzleGrid: board };
+	return { solvedGrid, puzzleGrid: board, emptyCells };
 }
 
 function printSudoku(board) {
@@ -93,7 +94,7 @@ function printSudoku(board) {
 	}
 }
 
-export const { solvedGrid, puzzleGrid } = generateSudoku();
+export const { solvedGrid, puzzleGrid, emptyCells } = generateSudoku(21, 20); //examples maxToAdd, min
 console.log("Generated Sudoku puzzle (Unsolved):");
 printSudoku(puzzleGrid);
 
