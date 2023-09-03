@@ -1,5 +1,7 @@
 import styles from "./WinnerModal.module.css";
-export const WinnerModal = ({ show, title }: any) => {
+import { useNavigate } from "react-router-dom";
+export const WinnerModal = ({ handleClose, show, title }: any) => {
+	const navigate = useNavigate();
 	const showHideClassName = show
 		? `${styles.modal} ${styles.displayBlock}`
 		: `${styles.modal} ${styles.displayNone}`;
@@ -11,18 +13,18 @@ export const WinnerModal = ({ show, title }: any) => {
 				<button
 					type="button"
 					className={styles.buttonCool}
-					// onClick={() => {
-					// 	handleClose(false);
-					// }}
+					onClick={() => {
+						handleClose(false);
+					}}
 				>
 					Close
 				</button>
 				<button
 					type="button"
 					className={styles.buttonCool}
-					// onClick={() => {
-					// 	navigate("/");
-					// }}
+					onClick={() => {
+						navigate("/");
+					}}
 				>
 					Home
 				</button>

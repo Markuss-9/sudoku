@@ -74,7 +74,7 @@ export function generateSudoku(maxToAdd, min) {
 
 	// Remove random numbers from the filled Sudoku board to create the puzzle
 	const emptyCells = Math.floor(Math.random() * maxToAdd + min); // Adjust the range as desired for difficulty
-	console.log("🚀 ~ generateSudoku ~ emptyCells:", emptyCells);
+	// console.log("🚀 ~ generateSudoku ~ emptyCells:", emptyCells);
 	let cellsRemoved = 0;
 	while (cellsRemoved < emptyCells) {
 		const row = Math.floor(Math.random() * 9);
