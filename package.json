@@ -1,6 +1,6 @@
 {
 	"name": "sudoku",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"private": true,
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.17.0",
@@ -13,12 +13,13 @@
 		"console": "^0.7.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.15.0",
 		"react-scripts": "5.0.1",
 		"styled-components": "^6.0.5",
 		"web-vitals": "^3.4.0"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "cross-env BROWSER=none react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
@@ -47,6 +48,7 @@
 		"path": false
 	},
 	"devDependencies": {
+		"cross-env": "^7.0.3",
 		"typescript": "^4.9.5"
 	}
 }
