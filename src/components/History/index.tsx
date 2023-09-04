@@ -44,7 +44,7 @@ export function History({ data }: any) {
 							difficultyMap[b.difficulty];
 
 						// If the difficulty levels are equal, compare the numbers
-						if (difficultyComparison === 0) {
+						if (difficultyComparison === 0 && a.time && b.time) {
 							return a.time.raw - b.time.raw;
 						}
 
