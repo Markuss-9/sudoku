@@ -3,10 +3,18 @@ import { History } from "../../components/History";
 
 import "./Home.css";
 import { useState } from "react";
+
+interface time {
+	minutes: number;
+	seconds: number;
+	raw: number;
+}
+
 interface his {
 	timestamp: number;
 	difficulty: string;
 	status: string;
+	time: time;
 }
 
 function Home() {
@@ -17,9 +25,9 @@ function Home() {
 	// 	: [];
 
 	const [history, setHistory] = useState<Array<his>>(
-		storedHistoryString ? JSON.parse(storedHistoryString) : []
+		storedHistoryString ? JSON.parse(storedHistoryString) : null
 	);
-	// console.log("🚀 ~ Home ~ history:", history);
+
 	return (
 		<div className="Home">
 			<h1>Sudoku</h1>
@@ -49,7 +57,7 @@ function Home() {
 
 			<br />
 			<br />
-			<History data={history} />
+			{history && <History data={history} />}
 		</div>
 	);
 }

@@ -1,0 +1,56 @@
+.listContainer {
+	font-family: Arial, sans-serif;
+	width: 500px;
+	height: 600px;
+	overflow-y: overlay;
+	border: 1px solid #ccc;
+	display: inline-block;
+}
+
+.listItem {
+	display: block;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.itemBox {
+	flex: 1;
+	padding: 5px;
+}
+
+.icon {
+	color: #007bff;
+	width: 20%;
+}
+
+.difficulty {
+	font-weight: bold;
+	width: 15%;
+}
+.header {
+	color: #c3c3c3;
+}
+
+.time {
+	width: 10%;
+	color: #0075bc;
+}
+
+.timestamp {
+	color: #999;
+	width: 30%;
+}
+
+.appLogo {
+	width: 50px;
+}
+
+.hard {
+	color: #6f1f1f;
+}
+.medium {
+	color: #c19a00;
+}
+.easy {
+	color: #5ec100;
+}
