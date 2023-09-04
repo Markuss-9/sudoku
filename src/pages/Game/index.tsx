@@ -26,7 +26,7 @@ function Game() {
 		useState<Array<Array<number>>>(solvedGrid);
 	const [puzzleGridState, setPuzzleGrid] =
 		useState<Array<Array<number>>>(puzzleGrid);
-	const [emptyCellsState, setEmptyCells] = useState<number>(emptyCells);
+	const [movesToWin, setMovesToWin] = useState<number>(emptyCells);
 	useEffect(() => {
 		var maxToAdd = 3,
 			min = 2;
@@ -57,7 +57,7 @@ function Game() {
 
 		setSolvedGrid(solvedGrid);
 		setPuzzleGrid(puzzleGrid);
-		setEmptyCells(emptyCells);
+		setMovesToWin(emptyCells);
 	}, [difficulty]);
 
 	const mergeGrid = () => {
@@ -79,7 +79,6 @@ function Game() {
 
 	const [squareFocus, setSquareFocus] = useState({ x: 0, y: 0 });
 	const [grid, setGrid] = useState(mergeGrid());
-	const [movesToWin, setMovesToWin] = useState(emptyCellsState);
 
 	const [hearts, setHearts] = useState<number>(3);
 
