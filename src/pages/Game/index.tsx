@@ -86,10 +86,17 @@ function Game() {
 		setGrid(mergeGrid());
 	}, [difficulty, solvedGridState, puzzleGridState]);
 
+	interface time {
+		minutes: number;
+		seconds: number;
+		raw: number;
+	}
+
 	interface his {
 		timestamp: number;
 		difficulty: string;
 		status: string;
+		time: time;
 	}
 
 	const updateNumber = useCallback(
@@ -102,6 +109,8 @@ function Game() {
 			grid[squareFocus.y][squareFocus.x].solved
 				? setHearts(hearts - 1)
 				: setMovesToWin(movesToWin - 1);
+
+			if (!isRunning) setIsRunning(true);
 		},
 		[grid, squareFocus, hearts, movesToWin]
 	);
@@ -116,6 +125,7 @@ function Game() {
 					timestamp: new Date().getTime(),
 					difficulty: difficulty || "error on difficult",
 					status: status,
+					time: { minutes: minutes, seconds: seconds, raw: time },
 				};
 
 				const storedHistoryString = localStorage.getItem("history");
@@ -130,9 +140,11 @@ function Game() {
 		};
 
 		if (!hearts) {
+			setIsRunning(false);
 			storeLocalStorage("Defeat");
 		}
 		if (!movesToWin) {
+			setIsRunning(false);
 			storeLocalStorage("Victory");
 		}
 	}, [hearts, movesToWin, isStored]);
@@ -156,6 +168,32 @@ function Game() {
 	// `;
 	const [close, setClose] = useState(true);
 
+	const [time, setTime] = useState(0);
+	const [minutes, setMinutes] = useState(0);
+	const [seconds, setSeconds] = useState(0);
+
+	const [isRunning, setIsRunning] = useState(false);
+
+	useEffect(() => {
+		let intervalId: any;
+		if (isRunning) {
+			intervalId = setInterval(() => {
+				setMinutes(Math.floor((time % 360000) / 6000));
+				setSeconds(Math.floor((time % 6000) / 100));
+				setTime(time + 1);
+			}, 10);
+		}
+		return () => clearInterval(intervalId);
+	}, [isRunning, time]);
+
+	const startAndStop = () => {
+		setIsRunning(!isRunning);
+	};
+
+	const reset = () => {
+		setTime(0);
+	};
+
 	return (
 		<div className="Game">
 			<h1
@@ -165,6 +203,12 @@ function Game() {
 			>
 				Sudoku
 			</h1>
+			<p>
+				{minutes.toString().padStart(2, "0")}:
+				{seconds.toString().padStart(2, "0")}
+				{/* {time} */}
+			</p>
+			<br />
 			<Hearts attempts={hearts} />
 			<AllGrid
 				grid={grid}
