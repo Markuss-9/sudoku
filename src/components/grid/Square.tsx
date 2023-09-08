@@ -8,9 +8,18 @@ interface oggetto {
 	y: number;
 	focus: boolean;
 	isError: boolean;
+	isTabletOrMobile: boolean;
 }
 
-export const Square = ({ value, click, x, y, focus, isError }: oggetto) => {
+export const Square = ({
+	value,
+	click,
+	x,
+	y,
+	focus,
+	isError,
+	isTabletOrMobile,
+}: oggetto) => {
 	// const colors: Array<string> = [
 	// 	"#59000a",
 	// 	"#520059",
@@ -50,12 +59,14 @@ export const Square = ({ value, click, x, y, focus, isError }: oggetto) => {
 		? `${styles.focus}`
 		: value !== 0
 		? `${styles.valueNotZero}`
-		: "";
+		: `${styles.valueZero}`;
 
 	return (
 		<>
 			<div
-				className={`${styles.squareClass} ${backgrounds}`}
+				className={`${backgrounds} - ${
+					isTabletOrMobile ? styles.squareMobile : styles.squareClass
+				}`}
 				onClick={(e) => {
 					click({ x: x, y: y });
 				}}

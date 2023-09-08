@@ -1,19 +1,18 @@
 import { formatWithClientLocale } from "../../utils/timestamp";
 import skull from "../../assets/skull.svg";
 import win from "../../assets/win.svg";
+import comment from "../../assets/comment.svg";
 import styles from "./History.module.css";
 
-export function History({ data }: any) {
+export function History({ data, updateHistoryWithComment }: any) {
 	const difficultyMap: any = {
 		hard: 1,
 		medium: 2,
 		easy: 3,
 	};
-
-	const difficultyColors: any = {
-		hard: "#6f1f1f",
-		medium: "#c19a00",
-		easy: "#5ec100",
+	const statusMap: any = {
+		Victory: 1,
+		Defeat: 2,
 	};
 
 	return (
@@ -39,16 +38,25 @@ export function History({ data }: any) {
 				</tr> */}
 				{data
 					.sort((a: any, b: any) => {
+						const statusComparison =
+							statusMap[a.status] - statusMap[b.status];
+
 						const difficultyComparison =
 							difficultyMap[a.difficulty] -
 							difficultyMap[b.difficulty];
 
 						// If the difficulty levels are equal, compare the numbers
-						if (difficultyComparison === 0 && a.time && b.time) {
+						if (statusComparison) return statusComparison;
+						if (difficultyComparison) return difficultyComparison;
+
+						if (
+							statusComparison === 0 &&
+							difficultyComparison === 0 &&
+							a.time &&
+							b.time
+						) {
 							return a.time.raw - b.time.raw;
 						}
-
-						return difficultyComparison;
 					})
 					.map((item: any) => {
 						return (
@@ -59,13 +67,13 @@ export function History({ data }: any) {
 									{item.status === "Defeat" ? (
 										<img
 											src={skull}
-											className={styles.appLogo}
+											className={styles.statusIcon}
 											alt="Defeat"
 										/>
 									) : item.status === "Victory" ? (
 										<img
 											src={win}
-											className={styles.appLogo}
+											className={styles.statusIcon}
 											alt="Victory"
 										/>
 									) : (
@@ -91,6 +99,38 @@ export function History({ data }: any) {
 											)}:${item.time.seconds
 											.toString()
 											.padStart(2, "0")}`}
+								</td>
+								<td
+									className={`${styles.itemBox} ${styles.comment}`}
+								>
+									{item.comment ? (
+										<span
+											onClick={() => {
+												const comment =
+													prompt("Enter a comment");
+												updateHistoryWithComment(
+													item.timestamp,
+													comment
+												);
+											}}
+										>
+											{item.comment}
+										</span>
+									) : (
+										<img
+											src={comment}
+											className={styles.commentIcon}
+											alt="Comment"
+											onClick={() => {
+												const comment =
+													prompt("Enter a comment");
+												updateHistoryWithComment(
+													item.timestamp,
+													comment
+												);
+											}}
+										/>
+									)}
 								</td>
 								<td
 									className={`${styles.itemBox} ${styles.timestamp}`}

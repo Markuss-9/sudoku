@@ -3,6 +3,8 @@ import styles from "./Square.module.css";
 
 import { createBlocks } from "../../utils/createBlocks";
 
+import { useMediaQuery } from "react-responsive";
+
 interface coords {
 	x: number;
 	y: number;
@@ -20,12 +22,18 @@ interface Grid {
 }
 
 export const AllGrid = ({ grid, click, focusObj }: Grid) => {
+	const isTabletOrMobile = useMediaQuery({ query: "(max-width: 700px)" }); // 1224px
 	const blocksMapped = createBlocks(grid).map((row: any) => {
 		return (
 			<div className={styles.blocchetto}>
 				{row.map((item: any) => {
 					return (
-						<Block block={item} click={click} focusObj={focusObj} />
+						<Block
+							block={item}
+							click={click}
+							focusObj={focusObj}
+							isTabletOrMobile={isTabletOrMobile}
+						/>
 					);
 				})}
 			</div>
@@ -33,7 +41,13 @@ export const AllGrid = ({ grid, click, focusObj }: Grid) => {
 	});
 	return (
 		<>
-			<div className={styles.tabellona}>{blocksMapped}</div>
+			<div
+				className={
+					isTabletOrMobile ? styles.tabellonaMobile : styles.tabellona
+				}
+			>
+				{blocksMapped}
+			</div>
 		</>
 	);
 };

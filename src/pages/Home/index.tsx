@@ -15,6 +15,7 @@ interface his {
 	difficulty: string;
 	status: string;
 	time: time;
+	comment: string;
 }
 
 function Home() {
@@ -27,6 +28,17 @@ function Home() {
 	const [history, setHistory] = useState<Array<his>>(
 		storedHistoryString ? JSON.parse(storedHistoryString) : null
 	);
+
+	const updateHistoryWithComment = (timestamp: number, comment: string) => {
+		let newHistory = history;
+		const indexToUpdate = newHistory.findIndex(
+			(item) => item.timestamp === timestamp
+		);
+
+		newHistory[indexToUpdate].comment = comment;
+		localStorage.setItem("history", JSON.stringify(newHistory));
+		setHistory([...newHistory]);
+	};
 
 	return (
 		<div className="Home">
@@ -57,7 +69,12 @@ function Home() {
 
 			<br />
 			<br />
-			{history && <History data={history} />}
+			{history && (
+				<History
+					data={history}
+					updateHistoryWithComment={updateHistoryWithComment}
+				/>
+			)}
 		</div>
 	);
 }

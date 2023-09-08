@@ -8,8 +8,6 @@
 	justify-content: center;
 	align-items: center;
 	border: 2px solid rgb(0, 0, 0);
-
-	background: #666666;
 }
 
 .error {
@@ -22,6 +20,10 @@
 
 .valueNotZero {
 	background: #474747;
+}
+
+.valueZero {
+	background: #666666;
 }
 
 .block {
@@ -38,4 +40,31 @@
 	display: inline-block;
 	width: 492px; /*	see if i can do it dynamic */
 	border: solid #0058aa 1px;
+}
+
+.squareMobile {
+	height: 5vw;
+	width: 5vw;
+	padding: 2.15vw;
+	display: inline-flex;
+	border-radius: 5px;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	border: 0.2vw solid rgb(0, 0, 0);
+	font-size: 4vw;
+}
+
+.blockMobile {
+	margin-left: 5vw;
+	margin-right: 5vw;
+	width: 30vw;
+	display: table-cell;
+	border: solid #0058aa 0.2vw;
+}
+
+.tabellonaMobile {
+	display: inline-block;
+	width: 90vw;
+	border: solid #0058aa 0.2vw;
 }
