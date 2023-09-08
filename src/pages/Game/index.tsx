@@ -142,8 +142,7 @@ function Game() {
 		if (!hearts) {
 			setIsRunning(false);
 			storeLocalStorage("Defeat");
-		}
-		if (!movesToWin) {
+		} else if (!movesToWin) {
 			setIsRunning(false);
 			storeLocalStorage("Victory");
 		}
@@ -180,8 +179,8 @@ function Game() {
 			intervalId = setInterval(() => {
 				setMinutes(Math.floor((time % 360000) / 6000));
 				setSeconds(Math.floor((time % 6000) / 100));
-				setTime(time + 1);
-			}, 10);
+				setTime(time + 100);
+			}, 1000);
 		}
 		return () => clearInterval(intervalId);
 	}, [isRunning, time]);

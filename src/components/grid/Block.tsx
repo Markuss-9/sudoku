@@ -19,9 +19,15 @@ interface oggetto2 {
 	block: matrix;
 	click: Function;
 	focusObj: focus;
+	isTabletOrMobile: boolean;
 }
 
-export const Block = ({ block, click, focusObj }: oggetto2) => {
+export const Block = ({
+	block,
+	click,
+	focusObj,
+	isTabletOrMobile,
+}: oggetto2) => {
 	const cells: any = block.map((row: any) => {
 		return row.map((element: any) => {
 			return (
@@ -38,13 +44,18 @@ export const Block = ({ block, click, focusObj }: oggetto2) => {
 					isError={
 						element.value !== 0 && element.value !== element.solved
 					}
+					isTabletOrMobile={isTabletOrMobile}
 				/>
 			);
 		});
 	});
 	return (
 		<>
-			<div className={styles.block}>{cells}</div>
+			<div
+				className={isTabletOrMobile ? styles.blockMobile : styles.block}
+			>
+				{cells}
+			</div>
 		</>
 	);
 };
