@@ -88,18 +88,18 @@ export function generateSudoku(maxToAdd, min) {
 	return { solvedGrid, puzzleGrid: board, emptyCells };
 }
 
-function printSudoku(board) {
+export function printSudoku(board) {
 	for (let row = 0; row < 9; row++) {
 		console.log(board[row].map((num) => (num !== 0 ? num : ".")).join(" "));
 	}
 }
 
 export const { solvedGrid, puzzleGrid, emptyCells } = generateSudoku(21, 20); //examples maxToAdd, min
-console.log("Generated Sudoku puzzle (Unsolved):");
-printSudoku(puzzleGrid);
+// console.log("Generated Sudoku puzzle (Unsolved):");
+// printSudoku(puzzleGrid);
 
-console.log("\nSolved Sudoku puzzle:");
-printSudoku(solvedGrid);
+// console.log("\nSolved Sudoku puzzle:");
+// printSudoku(solvedGrid);
 
 // const fs = require("fs");
 

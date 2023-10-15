@@ -5,6 +5,8 @@ import { createBlocks } from "../../utils/createBlocks";
 
 import { useMediaQuery } from "react-responsive";
 
+import { Grid, Paper, Container, Stack } from "@mui/material";
+
 interface coords {
 	x: number;
 	y: number;
@@ -25,7 +27,7 @@ export const AllGrid = ({ grid, click, focusObj }: Grid) => {
 	const isTabletOrMobile = useMediaQuery({ query: "(max-width: 700px)" }); // 1224px
 	const blocksMapped = createBlocks(grid).map((row: any) => {
 		return (
-			<div className={styles.blocchetto}>
+			<div>
 				{row.map((item: any) => {
 					return (
 						<Block
@@ -39,15 +41,10 @@ export const AllGrid = ({ grid, click, focusObj }: Grid) => {
 			</div>
 		);
 	});
+
 	return (
 		<>
-			<div
-				className={
-					isTabletOrMobile ? styles.tabellonaMobile : styles.tabellona
-				}
-			>
-				{blocksMapped}
-			</div>
+			<div className={styles.testResponsive}>{blocksMapped}</div>
 		</>
 	);
 };

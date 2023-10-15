@@ -8,13 +8,15 @@ import { ButtonsActions } from "../../components/ButtonsActions/ButtonsActions";
 
 import { handleKeyPress } from "../../utils/handleKeyPress";
 
-import { generateSudoku } from "../../utils/generator-AI";
+import { generateSudoku, printSudoku } from "../../utils/generator-AI";
 
 // import styled from "styled-components";
 
 import Hearts from "../../components/Hearts/Hearts";
 
 import { WinnerModal } from "../../components/winner/WinnerModal";
+
+import SudokuGrid from "../../components/grid/GridMaterialUI";
 
 // const maxToAdd = 3,
 // 	min = 2;
@@ -32,8 +34,8 @@ function Game() {
 			min = 2;
 		switch (difficulty) {
 			case `easy`:
-				maxToAdd = 5;
-				min = 10;
+				maxToAdd = 0;
+				min = 1;
 				break;
 			case `medium`:
 				maxToAdd = 10;
@@ -83,6 +85,8 @@ function Game() {
 	const [hearts, setHearts] = useState<number>(3);
 
 	useEffect(() => {
+		// console.log("\nSolved Sudoku puzzle:");
+		// printSudoku(solvedGridState);
 		setGrid(mergeGrid());
 	}, [difficulty, solvedGridState, puzzleGridState]);
 
@@ -110,7 +114,11 @@ function Game() {
 				? setHearts(hearts - 1)
 				: setMovesToWin(movesToWin - 1);
 
-			if (!isRunning) setIsRunning(true);
+			if (!isRunning) {
+				console.log("\nSolved Sudoku puzzle:");
+				printSudoku(solvedGridState);
+				setIsRunning(true);
+			}
 		},
 		[grid, squareFocus, hearts, movesToWin]
 	);
@@ -214,6 +222,11 @@ function Game() {
 				click={movesToWin < 1 || hearts < 1 ? () => {} : setSquareFocus}
 				focusObj={squareFocus}
 			/>
+			{/* <SudokuGrid
+				grid={grid}
+				click={movesToWin < 1 || hearts < 1 ? () => {} : setSquareFocus}
+				focusObj={squareFocus}
+			/> */}
 			<br />
 			<br />
 			<ButtonsActions update={updateNumber} />

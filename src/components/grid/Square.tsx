@@ -1,5 +1,6 @@
 // import styled from "styled-components";
 import styles from "./Square.module.css";
+import { Grid, Paper, Box, Typography } from "@mui/material";
 
 interface oggetto {
 	value: number; //number non Number
@@ -63,16 +64,45 @@ export const Square = ({
 
 	return (
 		<>
-			<div
+			<Grid
+				item
+				style={{ flex: "1 0 0", padding: "4px" }}
+				onClick={(e) => {
+					click({ x: x, y: y });
+				}}
+			>
+				<Paper
+					elevation={3}
+					style={{
+						width: "100%",
+						paddingTop: "100%",
+						position: "relative",
+					}}
+				>
+					<Typography
+						variant="h6"
+						style={{
+							position: "absolute",
+							top: "50%",
+							left: "50%",
+							transform: "translate(-50%, -50%)",
+						}}
+					>
+						{value !== 0 ? value : `\u00A0`}
+					</Typography>
+				</Paper>
+			</Grid>
+			{/* <div
 				className={`${backgrounds} - ${
 					isTabletOrMobile ? styles.squareMobile : styles.squareClass
 				}`}
+				// className={classes.square}
 				onClick={(e) => {
 					click({ x: x, y: y });
 				}}
 			>
 				{value !== 0 ? value : `\u00A0`}
-			</div>
+			</div> */}
 		</>
 	);
 };

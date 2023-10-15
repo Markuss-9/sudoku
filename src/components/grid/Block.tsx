@@ -1,5 +1,7 @@
 import { Square } from "./Square";
 import styles from "./Square.module.css";
+import { Grid, Paper } from "@mui/material";
+import * as React from "react";
 
 interface focus {
 	x: number;
@@ -31,6 +33,7 @@ export const Block = ({
 	const cells: any = block.map((row: any) => {
 		return row.map((element: any) => {
 			return (
+				// <Grid container>
 				<Square
 					value={element.value}
 					click={click}
@@ -46,16 +49,28 @@ export const Block = ({
 					}
 					isTabletOrMobile={isTabletOrMobile}
 				/>
+				// </Grid>
 			);
 		});
 	});
+
+	const rows = [];
+	for (let i = 0; i < 3; i++) {
+		rows.push(
+			<Grid container item key={i} spacing={1}>
+				{cells.slice(i * 3, i * 3 + 3)}
+			</Grid>
+		);
+	}
 	return (
 		<>
-			<div
-				className={isTabletOrMobile ? styles.blockMobile : styles.block}
+			<Grid
+				container
+				spacing={1}
+				// className={isTabletOrMobile ? styles.blockMobile : styles.block}
 			>
-				{cells}
-			</div>
+				{rows}
+			</Grid>
 		</>
 	);
 };

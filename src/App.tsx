@@ -8,6 +8,7 @@ import Game from "./pages/Game";
 import packageJson from "../package.json";
 
 import { useEffect, useState } from "react";
+import { Grid, Paper } from "@mui/material";
 
 function App() {
 	console.log(packageJson.version);
